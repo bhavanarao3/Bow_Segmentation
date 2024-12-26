@@ -22,12 +22,20 @@ pip install -r requirements.txt
 1. Track Keypoints
 The first step involves tracking keypoints in the video.
 
+1.1. TAPIR
 Run the following command:
 
 ```bash
 python script_keypoint.py
 ```
 This script generates a file with the tracked keypoints and coordinates for subsequent steps.
+
+1.2. METRABS
+
+```bash
+python script_metrabs.py
+```
+Note: For Metrabs keypoint tracking, ensure that the video is upright and not rotated.
 
 2. Pitch Analysis
 Analyze the pitch in the audio data to identify silent frames.
