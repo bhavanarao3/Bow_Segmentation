@@ -1,0 +1,15 @@
+jax
+jaxlib
+mediapy
+numpy
+matplotlib
+opencv-python
+git+https://github.com/google-deepmind/tapnet.git
+scipy
+opencv-python-headless
+librosa
+icecream
+torch
+torchcrepe
+crepe
+pandas
