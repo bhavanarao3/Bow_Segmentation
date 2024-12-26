@@ -19,10 +19,10 @@ pip install -r requirements.txt
 
 ## Workflow
 
-1. Track Keypoints
+### Track Keypoints
 The first step involves tracking keypoints in the video.
 
-1.1. TAPIR
+#### TAPIR
 Run the following command:
 
 ```bash
@@ -30,14 +30,14 @@ python script_keypoint.py
 ```
 This script generates a file with the tracked keypoints and coordinates for subsequent steps.
 
-1.2. METRABS
+#### METRABS
 
 ```bash
 python script_metrabs.py
 ```
 Note: For Metrabs keypoint tracking, ensure that the video is upright and not rotated.
 
-2. Pitch Analysis
+### Pitch Analysis
 Analyze the pitch in the audio data to identify silent frames.
 
 Run the following command:
@@ -47,7 +47,7 @@ python script_pitch.py
 ```
 This script outputs a list of frames marked as silent based on the pitch analysis.
 
-3. Determine Movement Direction
+### Determine Movement Direction
 Use the keypoint tracking data and apply PCA to calculate the direction of bow movement.
 
 Run the following command:
@@ -57,7 +57,7 @@ python script_direction.py
 ```
 This script outputs the direction for each frame (Up or Down).
 
-4. Sync Frames
+### Sync Frames
 Synchronize the movement directions and silent frames to generate final annotations for each frame.
 
 Run the following command:
@@ -67,7 +67,7 @@ python script_sync.py
 ```
 The result will be an annotated list of frames with labels (Up, Down, or Silence).
 
-5. Visualize Results
+### Visualize Results
 Visualize the annotated data by creating a video with arrows and markers for movement direction.
 
 Run the following command:
@@ -77,7 +77,7 @@ python script_visualization.py
 ```
 This will produce an annotated video saved in the result directory.
 
-Output
+## Output
 - Keypoint Tracking: Tracked keypoints and coordinates.
 - Pitch Analysis: Identified silent frames.
 - Movement Direction: Frames annotated with directions (Up or Down).
