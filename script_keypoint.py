@@ -1,17 +1,49 @@
+import os
 import numpy as np
 from src.tapir_keypoint_tracking import TapirKeypointTracking
 
 # Define paths
-checkpoint_path = '/content/drive/MyDrive/Violin/tapir_checkpoint_panning.npy'
-video_path = '/content/drive/MyDrive/Violin/segmentation/cello_trial.avi'
-output_video_path = '/content/drive/MyDrive/Violin/segmentation/bow_keypoints.mp4'
-keypoints_file_path = '/content/drive/MyDrive/Violin/segmentation/bow_keypoints.csv'
+checkpoint_path = 'data/tapir_checkpoint_panning.npy'
+input_folder = 'data/cello/input_videos/'  # Folder containing input videos
+output_folder = 'data/cello/output_videos/'  # Folder for saving output videos
+keypoints_folder = 'data/cello//output_keypoints/'  # Folder for saving keypoints CSV files
+
+# Create output folders if they don't exist
+os.makedirs(output_folder, exist_ok=True)
+os.makedirs(keypoints_folder, exist_ok=True)
 
 # Initialize TAPIR keypoint tracking
 tapir_tracker = TapirKeypointTracking(checkpoint_path)
 
-# Define the keypoints of the violin (downsampled coordinates)
-violin_keypoints = np.array([(0, 183, 106)], dtype=np.float32) #(0,y,x)
+# Define a mapping of video file names to their respective keypoints
+video_keypoints_map = {
+    "video1.avi": np.array([(0, 183, 106)], dtype=np.float32),  # Example keypoints for video1
+    # "video2.avi": np.array([(0, 150, 120), (0, 200, 180)], dtype=np.float32),  # Example keypoints for video2
+    # Add more mappings for other videos
+}
 
-# Track keypoints and save outputs
-tapir_tracker.track_keypoints(video_path, violin_keypoints, output_video_path, keypoints_file_path)
+# Process all videos in the input folder
+for video_file in os.listdir(input_folder):
+    video_path = os.path.join(input_folder, video_file)
+
+    # Check if the file is a valid video file
+    if not video_file.lower().endswith(('.mp4', '.avi', '.mov', '.mkv')):
+        print(f"Skipping non-video file: {video_file}")
+        continue
+
+    # Retrieve the keypoints for the video
+    if video_file not in video_keypoints_map:
+        print(f"No keypoints defined for video: {video_file}. Skipping.")
+        continue
+
+    keypoints = video_keypoints_map[video_file]
+
+    # Define output paths for the video and keypoints CSV
+    output_video_path = os.path.join(output_folder, f"{os.path.splitext(video_file)[0]}_keypoints.mp4")
+    keypoints_file_path = os.path.join(keypoints_folder, f"{os.path.splitext(video_file)[0]}_keypoints.csv")
+
+    # Run keypoint tracking on the video
+    print(f"Processing video: {video_file} with keypoints: {keypoints}")
+    tapir_tracker.track_keypoints(video_path, keypoints, output_video_path, keypoints_file_path)
+
+print("Processing complete. Check the output folders for results.")
