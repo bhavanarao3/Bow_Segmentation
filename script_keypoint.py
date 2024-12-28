@@ -4,9 +4,9 @@ from src.tapir_keypoint_tracking import TapirKeypointTracking
 
 # Define paths
 checkpoint_path = 'data/tapir_checkpoint_panning.npy'
-input_folder = 'data/cello/input_videos/'  # Folder containing input videos
-output_folder = 'result/cello/output_videos/'  # Folder for saving output videos
-keypoints_folder = 'result/cello//output_keypoints/'  # Folder for saving keypoints CSV files
+input_folder = 'data/cello/input_video/'  # Folder containing input videos
+output_folder = 'result/cello/output_video/'  # Folder for saving output videos
+keypoints_folder = 'result/cello/output_csv/'  # Folder for saving keypoints CSV files
 
 # Create output folders if they don't exist
 os.makedirs(output_folder, exist_ok=True)
@@ -17,8 +17,8 @@ tapir_tracker = TapirKeypointTracking(checkpoint_path)
 
 # Define a mapping of video file names to their respective keypoints
 video_keypoints_map = {
-    "video1.avi": np.array([(0, 183, 106)], dtype=np.float32),  # Example keypoints for video1
-    # "video2.avi": np.array([(0, 150, 120), (0, 200, 180)], dtype=np.float32),  # Example keypoints for video2
+    "cello01.avi": np.array([(0, 183, 106)], dtype=np.float32),  # Example keypoints for video1
+    "cello02.mp4": np.array([(0, 209, 86)], dtype=np.float32),  # Example keypoints for video2
     # Add more mappings for other videos
 }
 
