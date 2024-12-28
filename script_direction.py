@@ -1,5 +1,4 @@
-# script_direction.py
-
+import os
 import matplotlib.pyplot as plt
 from src.bow_direction_pca import compute_movement_directions
 
@@ -44,11 +43,24 @@ def plot_trajectory_with_pca(csv_path, output_csv_path, plot_output_path):
 
     print(f"Trajectory plot with PCA and smoothed directions saved to {plot_output_path}")
 
+def process_folder(input_folder, output_folder):
+    # Iterate over all CSV files in the folder
+    for file_name in os.listdir(input_folder):
+        if file_name.endswith(".csv"):
+            csv_path = os.path.join(input_folder, file_name)
+            output_csv_path = os.path.join(output_folder, f"{file_name.replace('.csv', '_direction.csv')}")
+            plot_output_path = os.path.join(output_folder, f"{file_name.replace('.csv', '_trajectory_plot.png')}")
+
+            print(f"Processing {file_name}...")
+            plot_trajectory_with_pca(csv_path, output_csv_path, plot_output_path)
+
 # Example usage
 if __name__ == "__main__":
-    csv_path = "/content/drive/MyDrive/Violin/segmentation/bow_keypoints.csv"  # Replace with your actual path
-    output_csv_path = "/content/drive/MyDrive/Violin/segmentation/bow_movement_direction.csv"
-    plot_output_path = "/content/drive/MyDrive/Violin/segmentation/trajectory_plot_with_pca_smoothed.png"
-    
-    plot_trajectory_with_pca(csv_path, output_csv_path, plot_output_path)
+    input_folder = "result/cello/output_csv"  # Folder containing CSV files
+    output_folder = "result/cello/bow_movement"  # Folder to save results
 
+    # Create output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+
+    # Process all CSV files in the input folder
+    process_folder(input_folder, output_folder)
