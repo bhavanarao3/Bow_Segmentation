@@ -32,7 +32,7 @@ def draw_fundamental_curve(time, frequency, confidence, proj, algo, output_dir):
     print(f"Pitch curve saved as: {output_path}")
 
 # Pitch detection with CREPE model (either torch or tensorflow backend)
-def pitch_detect_crepe(crepe_backend, proj, instrument='cello', audio_path='wavs/background.wav', output_dir='output'):
+def pitch_detect_crepe(crepe_backend, proj, frame_start, frame_end, total_time, instrument='cello', audio_path='wavs/background.wav', output_dir='output'):
     if crepe_backend == 'torch':
         import torchcrepe
         import torch
@@ -73,13 +73,9 @@ def pitch_detect_crepe(crepe_backend, proj, instrument='cello', audio_path='wavs
         print('Please specify crepe_backend as either "torch" or "tensorflow"')
         return None
 
-    # Time range from 0 to 21.93 seconds, corresponding to frame 128 to 786
-    frame_start = 128
-    frame_end = 786
-    total_time = 21.9333333333333  # Total time for the audio segment
-
     # Map time to frame numbers
     frames = frame_start + (time / total_time) * (frame_end - frame_start)
+
 
     # Plot and save the pitch curve
     draw_fundamental_curve(time, frequency, confidence, proj, 'crepe', output_dir)
