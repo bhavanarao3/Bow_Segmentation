@@ -5,8 +5,8 @@ from src.tapir_keypoint_tracking import TapirKeypointTracking
 # Define paths
 checkpoint_path = 'data/tapir_checkpoint_panning.npy'
 input_folder = 'data/cello/input_videos/'  # Folder containing input videos
-output_folder = 'data/cello/output_videos/'  # Folder for saving output videos
-keypoints_folder = 'data/cello//output_keypoints/'  # Folder for saving keypoints CSV files
+output_folder = 'result/cello/output_videos/'  # Folder for saving output videos
+keypoints_folder = 'result/cello//output_keypoints/'  # Folder for saving keypoints CSV files
 
 # Create output folders if they don't exist
 os.makedirs(output_folder, exist_ok=True)
