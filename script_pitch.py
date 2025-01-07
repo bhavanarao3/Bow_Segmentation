@@ -14,7 +14,7 @@ def process_audio_file(audio_path, proj_name, output_dir, frame_start, frame_end
                                        output_dir=output_dir)
 
     # Step 2: Infer note positions with silence detection
-    inferred_notes = infer_note_positions_with_silence(pitch_results)
+    inferred_notes = infer_note_positions_with_silence(pitch_results, audio_path)
 
     # Step 3: Save inferred notes to CSV
     save_inferred_notes_to_csv(inferred_notes, proj_name, output_dir)
